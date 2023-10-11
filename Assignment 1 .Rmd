@@ -1,0 +1,63 @@
+---
+title: "Assignment 1"
+author: "YIYINNG WENG"
+date: "Oct 11 2023"
+output: html_document
+---
+```{r setup, include=FALSE} 
+
+
+knitr::opts_chunk$set(echo = FALSE) 
+```
+
+
+### Exercise 1
+My forked version of the assignment repository can be found at 
+https://github.com/yywengy/472_assignment1.git
+
+### Exercise 2
+
+
+
+```{r}
+#------------------------------------Exercise 2--------------------------------------------#
+# (1)
+library(tidyverse)
+data("mtcars")
+mtcars_t <- tibble::rownames_to_column(mtcars, "type") 
+head(mtcars_t)
+```
+The above data is Motor Trend Car Road Tests, and this data is a tidy data. Firstly, there are 11 variables, and each viriable has its own column. Secondly, there are 32 observations, and each observation has its its row. Thirdly, each value has its own cell. The data satisfies 3 rules of tidy data. Therefore, it is a tidy data. 
+
+Now, I will create an untidy version.
+
+```{r}
+# (2)
+un_mtcars_t <- pivot_longer(mtcars_t, cols = colnames(mtcars_t)[2:length(colnames(mtcars_t))], names_to = "categories", values_to = "mtcars_t")
+head(un_mtcars_t)
+```
+The above data is not a tidy data, because each variables does not have its own column.
+
+### Exercise 3
+
+
+```{r,echo=TRUE}
+
+#------------------------------------Exercise 3--------------------------------------------#
+
+ 
+data("iris")
+head(iris)
+iris_move <- iris %>% select (Species,everything())  # move the last column to the first column
+head(iris_move)
+iris_move %>%
+group_by(Species) %>%   # distinguish data according to different species
+  summarise(sp_length_mean = mean(Sepal.Length), sp_length_sd = sd(Sepal.Length), sp_observations = n()) %>%       #  using summarise function to calculate the mean and standard deviation of sepal length for each specie
+  head()
+```
+After transforming, we can get better access to information, and it becomes more informative. By summarizing, we can easily know the mean and standard deviation for each species, which can help us to compare them. However, we can not get these information from original data. 
+
+
+## Appendix: All code in this assignment
+
+```{r ref.label=knitr::all_labels(), echo=TRUE, eval=FALSE} 
